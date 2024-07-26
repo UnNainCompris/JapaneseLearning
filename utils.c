@@ -11,6 +11,16 @@ int equals_string(const char* first, const char* second, int check_length) {
     return 1;
 }
 
+int start_with(char* string, char* model, int model_length) {
+    model_length--;
+    for (int i = 0 ; i < model_length ; i++) {
+        if (string[i] != model[i]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
 char* replace_last(const char* string, int string_length,
                    const char* to_replace, int to_replace_length,
                    const char* replacement, int replacement_length) {
