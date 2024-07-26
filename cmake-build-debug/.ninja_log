@@ -1,0 +1,8 @@
+# ninja log v6
+2	223	7437084633943977	build.ninja	1a736096be80b5a1
+24	89	7436100119408736	CMakeFiles/JapaneseLearning.dir/Utils.c.obj	b2caf85b13a76ba4
+6	788	7436403280459534	CMakeFiles/JapaneseLearning.dir/main.c.obj	fbc50879d9f11ea7
+20	88	7436118093614199	CMakeFiles/JapaneseLearning.dir/InputHandler.c.obj	e70b21cb10783734
+809	899	7436403288496099	JapaneseLearning.exe	117e07114158b245
+11	808	7436403280515228	CMakeFiles/JapaneseLearning.dir/utils.c.obj	e4bf937f5948623
+11	134	7436347876036541	CMakeFiles/JapaneseLearning.dir/input_handler.c.obj	a49d118bd30cc34f
