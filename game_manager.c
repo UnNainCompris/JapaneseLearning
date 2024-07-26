@@ -22,23 +22,23 @@ void load_game_object(int* is_valid) {
     char* current_line_buffer = calloc(CURRENT_LINE_BUFFER_SIZE, sizeof(char));
     char* current_line;
 
-    int processing_answer = 0;
+    int is_processing_answer = 0;
 
     while (fgets(current_line_buffer, CURRENT_LINE_BUFFER_SIZE, game_config_file)) {
         current_line = replace(current_line_buffer, CURRENT_LINE_BUFFER_SIZE,
                                     "\n", sizeof("\n"),
                                     "", sizeof(""));
         if (equals_string(current_line, ANSWER_SECTION_START, sizeof(ANSWER_SECTION_START) / sizeof(char))) {
-            processing_answer = 1;
+            is_processing_answer = 1;
             continue;
         }
 
         if (equals_string(current_line, ANSWER_SECTION_END, sizeof(ANSWER_SECTION_END) / sizeof(char))) {
-            processing_answer = 0;
+            is_processing_answer = 0;
             continue;
         }
 
-        if (processing_answer) {
+        if (is_processing_answer) {
             parse_new_answer(current_line);
             continue;
         }

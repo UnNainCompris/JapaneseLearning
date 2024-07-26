@@ -21,6 +21,14 @@ int start_with(char* string, char* model, int model_length) {
     return 1;
 }
 
+int slength(const char* string) {
+    int index = 0;
+    while (string[index]) {
+        index++;
+    }
+    return index;
+}
+
 char* replace_last(const char* string, int string_length,
                    const char* to_replace, int to_replace_length,
                    const char* replacement, int replacement_length) {
