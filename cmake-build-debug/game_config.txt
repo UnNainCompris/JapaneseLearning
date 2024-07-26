@@ -1,4 +1,5 @@
 -<ANSWER>-
 <display_text>|<possible_answer>;<possible_answer>;<possible_answer>|<hint_text>
-あ|a;A|First letter of latin alphabet|Any other Text
+あ|a;A|First letter of latin alphabet|Any other Text\n
+zefzef
 -</ANSWER>-

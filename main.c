@@ -98,8 +98,8 @@ void game_load() {
 }
 
 int main(void) {
-    game_load();
     prepare_terminal();
+    game_load();
     load_buffer(INPUT_BUFFER_SIZE);
 
     pthread_create(&input_thread, NULL, input_thread_function, NULL);

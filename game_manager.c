@@ -7,7 +7,7 @@ int current_used_object_amount;
 int playable_object_amount;
 
 void parse_new_answer(char* answer_line) {
-
+    printf("Working with: '%s'\n", answer_line);
 }
 
 void load_game_object(int* is_valid) {
@@ -15,6 +15,7 @@ void load_game_object(int* is_valid) {
 
     if (!game_config_file) {
         (*is_valid) = 0;
+        fclose(game_config_file);
         return;
     }
 
@@ -24,24 +25,32 @@ void load_game_object(int* is_valid) {
     int processing_answer = 0;
 
     while (fgets(current_line_buffer, CURRENT_LINE_BUFFER_SIZE, game_config_file)) {
-        current_line = replace_last(current_line_buffer, CURRENT_LINE_BUFFER_SIZE, "\n", sizeof("\n"), "", sizeof(""));
-
-        if (processing_answer) {
-            parse_new_answer(current_line);
-        }
-
-        printf("Processing the following line: '%s'", current_line);
-
+        current_line = replace_last(current_line_buffer, CURRENT_LINE_BUFFER_SIZE,
+                                    "\n", sizeof("\n"),
+                                    " ", sizeof(" "));
+        printf("Raw line: '%s'\n", current_line_buffer);
+        printf("Active line: '%s'\n", current_line);
         if (equals_string(current_line, ANSWER_SECTION_START, sizeof(ANSWER_SECTION_START) / sizeof(char))) {
-            printf("Find section start\n");
+            processing_answer = 1;
+            continue;
         }
 
         if (equals_string(current_line, ANSWER_SECTION_END, sizeof(ANSWER_SECTION_END) / sizeof(char))) {
-            printf("Find section end\n");
+            processing_answer = 0;
+            continue;
         }
+
+        if (processing_answer) {
+            parse_new_answer(current_line);
+            continue;
+        }
+
+        free(current_line);
     }
 
     (*is_valid) = 1;
+    free(current_line_buffer);
+    fclose(game_config_file);
 }
 
 struct game_object* get_all_playable_object() {

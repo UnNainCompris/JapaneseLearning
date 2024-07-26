@@ -14,6 +14,8 @@ int equals_string(const char* first, const char* second, int check_length) {
 char* replace_last(const char* string, int string_length,
                    const char* to_replace, int to_replace_length,
                    const char* replacement, int replacement_length) {
+    to_replace_length--; replacement_length--; string_length--; // because char* start at 1 byte when empty
+
     int max_length = max(to_replace_length, replacement_length) * string_length;
 
     char* buffer = calloc(max_length, sizeof(char));
@@ -24,7 +26,7 @@ char* replace_last(const char* string, int string_length,
     int matching = 0;
     int index = 0;
 
-    for (int i = 0 ; i < string_length ; i++) {
+    for (int i = 0 ; i <= string_length ; i++) {
         while (matching < to_replace_length) {
             if (string[i + matching] == to_replace[matching]) {
                 matching++;
@@ -33,23 +35,23 @@ char* replace_last(const char* string, int string_length,
             }
         }
 
-        if (matching == to_replace_length - 1) {
+        if (matching == to_replace_length) {
             for (int x = 0 ; x <= max(buffer_index, i) ; x++) {
                 buffer[x] = clone_buffer[x];
             }
             buffer_index = i;
 
-            while (index < replacement_length - 1) {
+            while (index < replacement_length) {
                 buffer[buffer_index] = replacement[index];
                 index++;
                 buffer_index++;
             }
 
-            for (int x = i ; x < i + to_replace_length - 2 ; x++) {
+            for (int x = i ; x < i + to_replace_length - 1 ; x++) {
                 clone_buffer[x] = string[x];
             }
 
-            i += to_replace_length - 2;
+            i += to_replace_length - 1;
             index = 0;
         } else {
             buffer[buffer_index] = string[i];
