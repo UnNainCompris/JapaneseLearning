@@ -1,11 +1,20 @@
 #ifndef GAME_MANAGER_H
 #define GAME_MANAGER_H
 
+#define GAME_CONFIG_FILE_NAME "game_config.txt"
+#define CURRENT_LINE_BUFFER_SIZE 512
+
+#define ANSWER_SECTION_START "-<ANSWER>-"
+#define ANSWER_SECTION_END "-</ANSWER>-"
+
+#include <stdio.h>
+
+#include "utils.h"
+
 struct game_object {
     char* display_text;
     char** possible_answer;
     char* hint_text;
-    char* other_text;
 };
 
 void load_game_object(int* is_valid);

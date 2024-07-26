@@ -1,7 +1,7 @@
 #include "utils.h"
 
 int equals_string(const char* first, const char* second, int check_length) {
-    for (int i = 0; i < check_length ; i++) {
+    for (int i = 0 ; i < check_length ; i++) {
         if (first[i] == second[i]) {
             continue;
         } else {
@@ -9,6 +9,59 @@ int equals_string(const char* first, const char* second, int check_length) {
         }
     }
     return 1;
+}
+
+char* replace_last(const char* string, int string_length,
+                   const char* to_replace, int to_replace_length,
+                   const char* replacement, int replacement_length) {
+    int max_length = max(to_replace_length, replacement_length) * string_length;
+
+    char* buffer = calloc(max_length, sizeof(char));
+    char* clone_buffer = calloc(max_length, sizeof(char));
+
+    int buffer_index = 0;
+
+    int matching = 0;
+    int index = 0;
+
+    for (int i = 0 ; i < string_length ; i++) {
+        while (matching < to_replace_length) {
+            if (string[i + matching] == to_replace[matching]) {
+                matching++;
+            } else {
+                break;
+            }
+        }
+
+        if (matching == to_replace_length - 1) {
+            for (int x = 0 ; x <= max(buffer_index, i) ; x++) {
+                buffer[x] = clone_buffer[x];
+            }
+            buffer_index = i;
+
+            while (index < replacement_length - 1) {
+                buffer[buffer_index] = replacement[index];
+                index++;
+                buffer_index++;
+            }
+
+            for (int x = i ; x < i + to_replace_length - 2 ; x++) {
+                clone_buffer[x] = string[x];
+            }
+
+            i += to_replace_length - 2;
+            index = 0;
+        } else {
+            buffer[buffer_index] = string[i];
+            buffer_index++;
+        }
+
+        clone_buffer[i] = string[i];
+        matching = 0;
+    }
+
+    free(clone_buffer);
+    return buffer;
 }
 
 char* repeat(int times, char* to_repeat) {

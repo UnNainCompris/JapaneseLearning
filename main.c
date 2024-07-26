@@ -1,4 +1,5 @@
 #include <pthread.h>
+#include <stdio.h>
 
 #include "game_manager.h"
 #include "input_handler.h"
@@ -14,8 +15,8 @@ int running = 1, should_rerender = 0;
 void stop(char* reason) {
     running = 0;
     system("cls");
-    printf("Stopping process !");
-    printf("Given reason: %s", reason);
+    printf("Stopping process !\n");
+    printf("Given reason: %s\n", reason);
     system("pause");
     exit(0);
 }
@@ -93,6 +94,7 @@ void game_load() {
     if (!is_valid) {
         stop("Error on loading game object !");
     }
+    system("pause");
 }
 
 int main(void) {
