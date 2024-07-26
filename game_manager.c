@@ -25,11 +25,9 @@ void load_game_object(int* is_valid) {
     int processing_answer = 0;
 
     while (fgets(current_line_buffer, CURRENT_LINE_BUFFER_SIZE, game_config_file)) {
-        current_line = replace_last(current_line_buffer, CURRENT_LINE_BUFFER_SIZE,
+        current_line = replace(current_line_buffer, CURRENT_LINE_BUFFER_SIZE,
                                     "\n", sizeof("\n"),
-                                    " ", sizeof(" "));
-        printf("Raw line: '%s'\n", current_line_buffer);
-        printf("Active line: '%s'\n", current_line);
+                                    "", sizeof(""));
         if (equals_string(current_line, ANSWER_SECTION_START, sizeof(ANSWER_SECTION_START) / sizeof(char))) {
             processing_answer = 1;
             continue;

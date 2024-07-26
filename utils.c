@@ -66,6 +66,48 @@ char* replace_last(const char* string, int string_length,
     return buffer;
 }
 
+char* replace(const char* string, int string_length,
+                   const char* to_replace, int to_replace_length,
+                   const char* replacement, int replacement_length) {
+    to_replace_length--; replacement_length--; string_length--; // because char* start at 1 byte when empty
+
+    int max_length = max(to_replace_length, replacement_length) * string_length;
+
+    char* buffer = calloc(max_length, sizeof(char));
+    int buffer_index = 0;
+
+    int matching = 0;
+    int index = 0;
+
+    for (int i = 0 ; i <= string_length ; i++) {
+        while (matching < to_replace_length) {
+            if (string[i + matching] == to_replace[matching]) {
+                matching++;
+            } else {
+                break;
+            }
+        }
+
+        if (matching == to_replace_length) {
+            while (index < replacement_length) {
+                buffer[buffer_index] = replacement[index];
+                index++;
+                buffer_index++;
+            }
+
+            i += to_replace_length - 1;
+            index = 0;
+        } else {
+            buffer[buffer_index] = string[i];
+            buffer_index++;
+        }
+
+        matching = 0;
+    }
+
+    return buffer;
+}
+
 char* repeat(int times, char* to_repeat) {
     char* buffer = calloc(times + 1, sizeof(char));
 

@@ -6,9 +6,8 @@
 #include <stdio.h>
 
 int equals_string(const char* first, const char* second, int check_length);
-char* replace_last(const char* string, int string_length,
-                   const char* to_replace, int to_replace_length,
-                   const char* replacement, int replacement_length);
+char* replace_last(const char* string, int string_length,const char* to_replace, int to_replace_length,const char* replacement, int replacement_length);
+char* replace(const char* string, int string_length,const char* to_replace, int to_replace_length,const char* replacement, int replacement_length);
 char* repeat(int times, char* to_repeat);
 
 void sleep_ms(long milliseconds);
