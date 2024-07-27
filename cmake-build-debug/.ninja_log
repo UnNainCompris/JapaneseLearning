@@ -7,3 +7,9 @@
 854	950	7437198895271286	JapaneseLearning.exe	48523ac3c5e6f15d
 10	985	7437198791349356	CMakeFiles/JapaneseLearning.dir/utils.c.obj	e4bf937f5948623
 11	134	7436347876036541	CMakeFiles/JapaneseLearning.dir/input_handler.c.obj	a49d118bd30cc34f
+18	142	7438171187707039	CMakeFiles/JapaneseLearning.dir/string_utils.c.obj	c71e7e9d3fd0ff30
+5	1291	7438171187581851	CMakeFiles/JapaneseLearning.dir/main.c.obj	fbc50879d9f11ea7
+11	1298	7438171187637221	CMakeFiles/JapaneseLearning.dir/utils.c.obj	e4bf937f5948623
+10	82	7438172686788322	CMakeFiles/JapaneseLearning.dir/game_manager.c.obj	1480897e276497ec
+6	800	7438172686738770	CMakeFiles/JapaneseLearning.dir/main.c.obj	fbc50879d9f11ea7
+800	891	7438172694680042	JapaneseLearning.exe	bd61c1b84f4b3fe7

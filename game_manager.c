@@ -25,15 +25,13 @@ void load_game_object(int* is_valid) {
     int is_processing_answer = 0;
 
     while (fgets(current_line_buffer, CURRENT_LINE_BUFFER_SIZE, game_config_file)) {
-        current_line = replace(current_line_buffer, CURRENT_LINE_BUFFER_SIZE,
-                                    "\n", sizeof("\n"),
-                                    "", sizeof(""));
-        if (equals_string(current_line, ANSWER_SECTION_START, sizeof(ANSWER_SECTION_START) / sizeof(char))) {
+        current_line = replace(current_line_buffer, "\n", "", -1);
+        if (strequals(current_line, ANSWER_SECTION_START)) {
             is_processing_answer = 1;
             continue;
         }
 
-        if (equals_string(current_line, ANSWER_SECTION_END, sizeof(ANSWER_SECTION_END) / sizeof(char))) {
+        if (strequals(current_line, ANSWER_SECTION_END)) {
             is_processing_answer = 0;
             continue;
         }

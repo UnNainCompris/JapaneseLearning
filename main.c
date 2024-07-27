@@ -3,6 +3,7 @@
 
 #include "game_manager.h"
 #include "input_handler.h"
+#include "string_utils.h"
 #include "utils.h"
 
 #define INPUT_BUFFER_SIZE 50
@@ -78,7 +79,7 @@ void* input_thread_function(void* args) {
 
         update_render();
 
-        if (equals_string(get_buffer(), "exit", 4)) {
+        if (strequals(get_buffer(), "exit")) {
             stop("Input 'exit'.");
             break;
         }

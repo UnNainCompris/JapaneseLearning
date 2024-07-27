@@ -148,6 +148,7 @@ char* replace_last(const char* string, const char* to_replace, const char* repla
 
 /**
  * Use to split a string in different string.
+ * @depend_on count(), find_index(), calloc(), strlength(), substring(), free()
  * @param string The string that is going to be split.
  * @param splitter The string that will split the 'string'.
  * @param limit The max amount of split object (negative or null value mean infinite split).
@@ -155,5 +156,15 @@ char* replace_last(const char* string, const char* to_replace, const char* repla
  * @return A pointer to the array of string.
  */
 char** split(const char* string, const char* splitter, int limit, int* string_amount);
+
+int strequals(const char* first, const char* second);
+
+/**
+ * Use to repeat a 'times' time a sequence of char 'string'.
+ * @param times The amount of time to repeat the string 'string'.
+ * @param string The string that will be repeated.
+ * @return The string 'string' repeated 'times' time.
+ */
+char* repeat(int times, const char* string);
 
 #endif //ERIS_STRING_UTILS_H

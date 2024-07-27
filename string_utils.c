@@ -263,3 +263,34 @@ char** split(const char* string, const char* splitter, int limit, int* string_am
     free(index_list);
     return buffer;
 }
+
+int strequals(const char* first, const char* second) {
+    int index = 0;
+    while (1) {
+        if (!first[index] && !second[index]) {
+            return 1;
+        }
+
+        if (first[index] != second[index]) {
+            return 0;
+        }
+
+        index++;
+    }
+}
+
+char* repeat(int times, const char* string) {
+    int string_length = strlength(string);
+    char* buffer = calloc((times * string_length) + 1, sizeof(char));
+    int buffer_index = 0;
+
+    for (int i = 0 ; i < times ; i++) {
+        for (int x = 0 ; x < string_length ; x++) {
+            buffer[buffer_index] = string[x];
+            buffer_index++;
+        }
+    }
+
+    buffer[times * string_length] = '\0';
+    return buffer;
+}

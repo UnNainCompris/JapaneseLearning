@@ -9,7 +9,7 @@
 
 #include <stdio.h>
 
-#include "utils.h"
+#include "string_utils.h"
 
 struct game_object {
     char* display_text;
