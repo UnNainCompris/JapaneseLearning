@@ -15,7 +15,6 @@ int running = 1, should_rerender = 0;
 
 void stop(char* reason) {
     running = 0;
-    system("cls");
     printf("Stopping process !\n");
     printf("Given reason: %s\n", reason);
     system("pause");
@@ -95,6 +94,17 @@ void game_load() {
     if (!is_valid) {
         stop("Error on loading game object !");
     }
+    for (int i = 0 ; i < get_playable_object_amount() ; i++) {
+        game_object* current_object = get_all_playable_object()[0];
+        printf("----\n");
+        printf("Display text: %s\n", current_object->display_text);
+        for (int x = 0 ; current_object->possible_answer[x] ; x++) {
+            printf("Possible Answer: %s\n", current_object->possible_answer[x]);
+        }
+        printf("Hint text: %s\n", current_object->hint_text);
+        printf("----\n");
+    }
+
     system("pause");
 }
 

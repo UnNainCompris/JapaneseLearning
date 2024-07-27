@@ -1,10 +1,12 @@
 #include "utils.h"
 
 void sleep_ms(long milliseconds) {
-    struct timespec req, rem;
-    req.tv_sec = milliseconds / 1000;
-    req.tv_nsec = (milliseconds % 1000) * 1000000L;
-    nanosleep(&req, &rem);
+    clock_t start = clock();
+    while (1) {
+        if (clock() - start >= milliseconds) {
+            break;
+        }
+    }
 }
 
 int get_terminal_width() {
@@ -26,5 +28,7 @@ int get_terminal_height() {
 }
 
 void move_cursor_to_row(int row) {
-    printf("\033[H%s", repeat(row - 1, "\n"));
+    char* total_linebreak = repeat(row - 1, "\n");
+    printf("\033[H%s", total_linebreak);
+    free(total_linebreak);
 }

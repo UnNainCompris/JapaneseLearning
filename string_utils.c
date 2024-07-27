@@ -32,14 +32,14 @@ char* substring(const char* string, int start, int end) {
     end = min(max(end, 0), string_length);
 
     if (start == end) {
-        return " ";
+        return "";
     }
 
     if (start >= end) {
         return NULL;
     }
 
-    char* result = calloc(end - start, sizeof(char));
+    char* result = calloc(end - start + 1, sizeof(char));
 
     for (int index = start ; index < end ; index++) {
         if (string[index]) {
@@ -48,6 +48,8 @@ char* substring(const char* string, int start, int end) {
             break;
         }
     }
+
+    result[end - start] = '\0';
 
     return result;
 }
@@ -234,8 +236,13 @@ char** split(const char* string, const char* splitter, int limit, int* string_am
     int required_split_amount = (limit <= 0 ? max_split : limit - 1);
     int* index_list = find_index(string, splitter, NULL);
 
-    char** buffer = calloc(required_split_amount, sizeof(char*));
+    char** buffer = calloc(required_split_amount + 1, sizeof(char*));
     int buffer_index = 0;
+
+    if (max_split >= 1) {
+        buffer[0] = substring(string, 0, index_list[0]);
+        buffer_index++;
+    }
 
     while (split_counter < required_split_amount) {
         int substring_start = index_list[split_counter] + strlength(splitter);
