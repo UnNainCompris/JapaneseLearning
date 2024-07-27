@@ -167,4 +167,18 @@ int strequals(const char* first, const char* second);
  */
 char* repeat(int times, const char* string);
 
+/**
+ * Make a char upper case if can
+ * @param chr The char to make it upper case.
+ * @return The upper case char equivalent.
+ */
+char toupper(char chr);
+
+/**
+ * Make a char lower case if can
+ * @param chr The char to make it lower case.
+ * @return The lower case char equivalent.
+ */
+char tolower(char chr);
+
 #endif //ERIS_STRING_UTILS_H

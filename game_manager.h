@@ -16,13 +16,14 @@ typedef struct game_object game_object;
 struct game_object {
     char* display_text;
     char** possible_answer;
+    int answer_amount;
     char* hint_text;
 };
 
 void load_game_object(int* is_valid);
 
-game_object** get_all_playable_object();
-game_object** get_current_object();
+game_object* get_all_playable_object();
+game_object* get_current_object();
 
 int get_current_object_amount();
 int get_playable_object_amount();

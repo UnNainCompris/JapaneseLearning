@@ -1,7 +1,7 @@
 #include "game_manager.h"
 
-game_object** all_playable_object;
-game_object** current_used_object;
+game_object* all_playable_object;
+game_object* current_used_object;
 
 int current_used_object_amount;
 int playable_object_amount;
@@ -13,22 +13,21 @@ int parse_new_answer(char* answer_line) {
     char** raw_data = split(answer_line, "|", -1, &raw_data_length);
 
     if (raw_data_length != 3) {
-        printf("Size: %i", raw_data_length);
         return 0;
     }
 
     char* display_text = raw_data[0];
-    printf("%s display text\n", display_text);
-    char** possible_answer = split(raw_data[1], ";", -1, NULL);
+    int answer_amount = 0;
+    char** possible_answer = split(raw_data[1], ";", -1, &answer_amount);
     char* hint_text = raw_data[2];
 
-    game_object new_game_object = {display_text, possible_answer, hint_text};
+    game_object new_game_object = {display_text, possible_answer, answer_amount, hint_text};
     if (all_playable_object == NULL) {
         all_playable_object = malloc(sizeof(new_game_object));
     } else {
         all_playable_object = realloc(all_playable_object, sizeof(new_game_object) * (playable_object_amount + 1));
     }
-    all_playable_object[playable_object_amount] = &new_game_object;
+    all_playable_object[playable_object_amount] = new_game_object;
     playable_object_amount++;
 
     return 1;
@@ -76,11 +75,11 @@ void load_game_object(int* is_valid) {
     fclose(game_config_file);
 }
 
-game_object** get_all_playable_object() {
+game_object* get_all_playable_object() {
     return all_playable_object;
 }
 
-game_object** get_current_object() {
+game_object* get_current_object() {
     return current_used_object;
 }
 

@@ -301,3 +301,20 @@ char* repeat(int times, const char* string) {
     buffer[times * string_length] = '\0';
     return buffer;
 }
+
+char toupper(char chr) {
+    if (chr >= 97 && chr <= 122) {
+        return chr - 32;
+    } else {
+        return chr;
+    }
+}
+
+char tolower(char chr) {
+    if (chr >= 65 && chr <= 90) {
+        return chr + 32;
+    } else {
+        return chr;
+    }
+}
+
