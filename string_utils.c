@@ -302,7 +302,7 @@ char* repeat(int times, const char* string) {
     return buffer;
 }
 
-char toupper(char chr) {
+char to_upper(char chr) {
     if (chr >= 97 && chr <= 122) {
         return chr - 32;
     } else {
@@ -310,11 +310,37 @@ char toupper(char chr) {
     }
 }
 
-char tolower(char chr) {
+char* str_to_upper(char* string) {
+    int string_length = strlength(string);
+    char* buffer = malloc((string_length + 1) * sizeof(char));
+
+    for (int index = 0 ; string[index] ; index++) {
+        buffer[index] = to_upper(string[index]);
+    }
+
+    buffer[string_length] = '\0';
+
+    return buffer;
+}
+
+char to_lower(char chr) {
     if (chr >= 65 && chr <= 90) {
         return chr + 32;
     } else {
         return chr;
     }
+}
+
+char* str_to_lower(char* string) {
+    int string_length = strlength(string);
+    char* buffer = malloc((string_length + 1) * sizeof(char));
+
+    for (int index = 0 ; string[index] ; index++) {
+        buffer[index] = to_lower(string[index]);
+    }
+
+    buffer[string_length] = '\0';
+
+    return buffer;
 }
 
