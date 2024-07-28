@@ -6,6 +6,16 @@ game_object* current_used_object;
 int current_used_object_amount;
 int playable_object_amount;
 
+int simultaneously_object;
+
+int parse_config(char* config_line) {
+    if (start_with(config_line, "simultaneously_object=")) {
+
+    }
+
+    return 1;
+}
+
 int parse_new_answer(char* answer_line) {
     printf("Working with: '%s'\n", answer_line);
 
@@ -25,11 +35,19 @@ int parse_new_answer(char* answer_line) {
     if (all_playable_object == NULL) {
         all_playable_object = malloc(sizeof(new_game_object));
     } else {
-        all_playable_object = realloc(all_playable_object, sizeof(new_game_object) * (playable_object_amount + 1));
+        game_object* new_all_playable_object = realloc(all_playable_object, sizeof(new_game_object) * (playable_object_amount + 1));
+        if (!new_all_playable_object) {
+            free(new_all_playable_object);
+            free(raw_data);
+            return 0;
+        } else {
+            current_used_object = new_all_playable_object;
+        }
     }
     all_playable_object[playable_object_amount] = new_game_object;
     playable_object_amount++;
 
+    free(raw_data);
     return 1;
 }
 
