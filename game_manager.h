@@ -8,10 +8,12 @@
 #define ANSWER_SECTION_END "-</ANSWER>-"
 #define CONFIG_SECTION_START "-<CONFIG>-"
 #define CONFIG_SECTION_END "-</CONFIG>-"
+#define MAX_SIMULTANEOUSLY_OBJECT 11
 
 #include <stdio.h>
 
 #include "string_utils.h"
+#include "utils.h"
 
 typedef struct game_object game_object;
 

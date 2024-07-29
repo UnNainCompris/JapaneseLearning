@@ -9,8 +9,23 @@ int playable_object_amount;
 int simultaneously_object;
 
 int parse_config(char* config_line) {
+    printf("Working with: '%s'\n", config_line);
     if (start_with(config_line, "simultaneously_object=")) {
-
+        int is_int = 0;
+        char* raw_config_value = replace(config_line, "simultaneously_object=", "", -1);
+        int config_value = parse_int(raw_config_value, &is_int);
+        if (!is_int) {
+            printf("%s;%s\n", raw_config_value, config_line);
+            free(raw_config_value);
+            return 0;
+        } else if(config_value <= 0 || config_value > MAX_SIMULTANEOUSLY_OBJECT || config_value % 2 == 0) {
+            printf("simultaneously_object value is: %i.\n", config_value);
+            printf("simultaneously_object value should be greater than 0 lower than %i and be odd.\n", MAX_SIMULTANEOUSLY_OBJECT + 1);
+            free(raw_config_value);
+            return 0;
+        }
+        simultaneously_object = config_value;
+        free(raw_config_value);
     }
 
     return 1;
@@ -61,19 +76,23 @@ void load_game_object(int* is_valid) {
         return;
     }
 
-    char* current_line_buffer = calloc(CURRENT_LINE_BUFFER_SIZE, sizeof(char));
+    char* current_line_buffer = calloc(CURRENT_LINE_BUFFER_SIZE * 8, sizeof(char));
     char* current_line;
 
     int is_processing_answer = 0;
+    int is_processing_config = 0;
 
     while (fgets(current_line_buffer, CURRENT_LINE_BUFFER_SIZE, game_config_file)) {
         current_line = replace(current_line_buffer, "\n", "", -1);
+        printf("Current line: %s \n", current_line);
         if (strequals(current_line, ANSWER_SECTION_START)) {
             is_processing_answer = 1;
-        }
-
-        else if (strequals(current_line, ANSWER_SECTION_END)) {
+        } else if (strequals(current_line, ANSWER_SECTION_END)) {
             is_processing_answer = 0;
+        } else if (strequals(current_line, CONFIG_SECTION_START)) {
+            is_processing_config = 1;
+        } else if (strequals(current_line, CONFIG_SECTION_END)) {
+            is_processing_config = 0;
         }
 
         else if (is_processing_answer) {
@@ -83,9 +102,17 @@ void load_game_object(int* is_valid) {
                 fclose(game_config_file);
                 return;
             }
+        } else if (is_processing_config) {
+            if (!parse_config(current_line)) {
+                (*is_valid) = 0;
+                free(current_line_buffer);
+                fclose(game_config_file);
+                return;
+            }
         }
-
+        printf("e");
         free(current_line);
+        printf("e\n");
     }
 
     (*is_valid) = 1;
@@ -107,4 +134,8 @@ int get_current_object_amount() {
 
 int get_playable_object_amount() {
     return playable_object_amount;
+}
+
+int get_simultaneously_object() {
+    return simultaneously_object;
 }

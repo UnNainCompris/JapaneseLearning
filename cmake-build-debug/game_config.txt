@@ -2,4 +2,8 @@
 
 -<ANSWER>-
 あ|a|First letter of latin alphabet
+い|i|The letter izepofkzefpokzef
 -</ANSWER>-
+-<CONFIG>-
+simultaneously_object=11
+-</CONFIG>-

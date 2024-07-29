@@ -105,6 +105,8 @@ void game_load() {
         printf("----\n");
     }
 
+    printf("Simultaneously object: %i\n", get_simultaneously_object());
+
     system("pause");
 }
 

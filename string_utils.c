@@ -177,9 +177,14 @@ char* replace(const char* string, const char* to_replace, const char* replacemen
         }
         free(sub);
     }
-    char* replaced_string = copy(buffer);
-    free(buffer);
-    return replaced_string;
+    active_buffer_size++;
+    buffer[active_buffer_size] = '\0';
+    char* replaced_string = realloc(buffer, active_buffer_size * sizeof(char));
+    if(!replaced_string) {
+        return buffer;
+    } else {
+        return replaced_string;
+    }
 }
 
 char* replace_first(const char* string, const char* to_replace, const char* replacement) {
@@ -221,9 +226,14 @@ char* replace_from_end(const char* string, const char* to_replace, const char* r
         }
         free(sub);
     }
-    char* replaced_string = copy(buffer);
-    free(buffer);
-    return replaced_string;
+    active_buffer_size++;
+    buffer[active_buffer_size] = '\0';
+    char* replaced_string = realloc(buffer, active_buffer_size * sizeof(char));
+    if(!replaced_string) {
+        return buffer;
+    } else {
+        return replaced_string;
+    }
 }
 
 char* replace_last(const char* string, const char* to_replace, const char* replacement) {

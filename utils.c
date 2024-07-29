@@ -59,20 +59,21 @@ int parse_int(const char* string, int* is_int) {
         number_position--;
         index++;
     }
-
-    int max_signed_int_value[] = {2,1,4,7,4,8,3,6,4,7};
-    int is_last_equals = 0; // Check if the int value is in the bound of a real int value
-    for (int i = 0 ; i < 10 ; i++) {
-        if (number_validator_buffer[i] == max_signed_int_value[i]) {
-            if (i == 0){
-                is_last_equals = 1;
-            }
-        } else if (number_validator_buffer[i] < max_signed_int_value[i]) {
-            is_last_equals = 0;
-        } else if (number_validator_buffer[i] > max_signed_int_value[i]) {
-            if (is_last_equals || i == 0) {
-                free(number_validator_buffer);
-                return 0;
+    if (number_length == 10) {
+        int max_signed_int_value[] = {2, 1, 4, 7, 4, 8, 3, 6, 4, 7};
+        int is_last_equals = 0; // Check if the int value is in the bound of a real int value
+        for (int i = 0; i < 10; i++) {
+            if (number_validator_buffer[i] == max_signed_int_value[i]) {
+                if (i == 0) {
+                    is_last_equals = 1;
+                }
+            } else if (number_validator_buffer[i] < max_signed_int_value[i]) {
+                is_last_equals = 0;
+            } else if (number_validator_buffer[i] > max_signed_int_value[i]) {
+                if (is_last_equals || i == 0) {
+                    free(number_validator_buffer);
+                    return 0;
+                }
             }
         }
     }
