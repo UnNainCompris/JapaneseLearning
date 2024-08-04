@@ -95,7 +95,7 @@ void game_load() {
         stop("Error on loading game object !");
     }
     for (int i = 0 ; i < get_playable_object_amount() ; i++) {
-        game_object current_object = get_all_playable_object()[0];
+        game_object current_object = get_all_playable_object()[i];
         printf("----\n");
         printf("Display text: %s\n", current_object.display_text);
         for (int x = 0 ; x < current_object.answer_amount ; x++) {
@@ -106,8 +106,6 @@ void game_load() {
     }
 
     printf("Simultaneously object: %i\n", get_simultaneously_object());
-
-    system("pause");
 }
 
 int main(void) {

@@ -16,16 +16,16 @@ int parse_config(char* config_line) {
         int config_value = parse_int(raw_config_value, &is_int);
         if (!is_int) {
             printf("%s;%s\n", raw_config_value, config_line);
-            free(raw_config_value);
+            //free(raw_config_value);
             return 0;
         } else if(config_value <= 0 || config_value > MAX_SIMULTANEOUSLY_OBJECT || config_value % 2 == 0) {
             printf("simultaneously_object value is: %i.\n", config_value);
             printf("simultaneously_object value should be greater than 0 lower than %i and be odd.\n", MAX_SIMULTANEOUSLY_OBJECT + 1);
-            free(raw_config_value);
+            //free(raw_config_value);
             return 0;
         }
         simultaneously_object = config_value;
-        free(raw_config_value);
+        //free(raw_config_value);
     }
 
     return 1;
@@ -45,6 +45,10 @@ int parse_new_answer(char* answer_line) {
     int answer_amount = 0;
     char** possible_answer = split(raw_data[1], ";", -1, &answer_amount);
     char* hint_text = raw_data[2];
+
+    for(int i = 0 ; possible_answer[i] ; i++) {
+        printf("Possible answer: %s\n", possible_answer[i]);
+    }
 
     game_object new_game_object = {display_text, possible_answer, answer_amount, hint_text};
     if (all_playable_object == NULL) {
@@ -110,9 +114,15 @@ void load_game_object(int* is_valid) {
                 return;
             }
         }
-        printf("e");
+        printf("Content: ");
+        for (int i = 0 ; current_line[i] ; i++) {
+            printf("%c", current_line[i]);
+        }
+        printf("\n");
+        printf("freeing current line\n");
         free(current_line);
-        printf("e\n");
+        printf("free current line\n");
+        current_line = NULL;
     }
 
     (*is_valid) = 1;

@@ -26,6 +26,10 @@ char* copy(const char* string) {
 }
 
 char* substring(const char* string, int start, int end) {
+    if (!string) {
+        return NULL;
+    }
+
     const int string_length = strlength(string);
 
     start = min(max(start, 0), string_length);
@@ -50,7 +54,6 @@ char* substring(const char* string, int start, int end) {
     }
 
     result[end - start] = '\0';
-
     return result;
 }
 
@@ -240,25 +243,33 @@ char* replace_last(const char* string, const char* to_replace, const char* repla
     return replace_from_end(string, to_replace, replacement, 1);
 }
 
-char** split(const char* string, const char* splitter, int limit, int* string_amount) {
+char** split(char* string, const char* splitter, int limit, int* string_amount) {
     int split_counter = 0;
     int max_split = count(string, splitter);
-    int required_split_amount = (limit <= 0 ? max_split : limit - 1);
-    int* index_list = find_index(string, splitter, NULL);
+    int required_split_amount = (limit <= 0 ? max_split : limit - 1) + 1;
 
     char** buffer = calloc(required_split_amount + 1, sizeof(char*));
+    buffer[required_split_amount] = "\0";
     int buffer_index = 0;
+
+    if (required_split_amount == 1) {
+        (*string_amount) = 1;
+        buffer[0] = string;
+        return buffer;
+    }
+
+    int* index_list = find_index(string, splitter, NULL);
 
     if (max_split >= 1) {
         buffer[0] = substring(string, 0, index_list[0]);
         buffer_index++;
     }
 
-    while (split_counter < required_split_amount) {
+    while (split_counter < required_split_amount - 1) {
         int substring_start = index_list[split_counter] + strlength(splitter);
         int substring_end = index_list[split_counter + 1];
 
-        if(split_counter + 1 == required_split_amount) {
+        if(split_counter == required_split_amount) {
             substring_end = strlength(string);
         }
 

@@ -2,7 +2,6 @@
 #define ERIS_STRING_UTILS_H
 
 #include <stdlib.h> // From memory management.
-#include <stdio.h> // Debugging purpose only
 
 #ifndef max
 #define max(a, b) (a > b ? a : b)
@@ -159,7 +158,7 @@ char* replace_last(const char* string, const char* to_replace, const char* repla
  * @param string_amount A pointer of where we are going to write down the total of object inside the returned array.
  * @return A pointer to the array of string.
  */
-char** split(const char* string, const char* splitter, int limit, int* string_amount);
+char** split(char* string, const char* splitter, int limit, int* string_amount);
 
 int strequals(const char* first, const char* second);
 

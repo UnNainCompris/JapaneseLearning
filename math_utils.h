@@ -1,8 +1,6 @@
 #ifndef ERIS_MATH_UTILS_H
 #define ERIS_MATH_UTILS_H
 
-#include <stdio.h>
-
 // Const_name_DigitAmount
 #define HALF_PI_32 1.5707963267948966192313216916398
 #define PI_32 3.1415926535897932384626433832795
@@ -13,6 +11,13 @@
 #define DEG_TO_RAD_32 0.0174532925199432957692369076848
 
 #define LN10_32 2.3025850929940456840179914546844
+
+#ifndef max
+#define max(a, b) (a > b ? a : b)
+#endif
+#ifndef min
+#define min(a, b) (a > b ? b : a)
+#endif
 
 /**
  * Replicate math absolute value by return the positive value of any number.
