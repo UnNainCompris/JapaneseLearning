@@ -9,4 +9,5 @@ add_executable(JapaneseLearning # The name of the executable that's is build.
         utils.c utils.h # Only some utils terminal, and so on... .
         game_manager.c game_manager.h # The game manager that load every game input.
         string_utils.c string_utils.h # Utils for string management.
+        math_utils.c math_utils.h # Utils for math.
 )
