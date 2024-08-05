@@ -3,6 +3,7 @@
 -<ANSWER>-
 あ|a|First letter of latin alphabet
 い|i|The letter izepofkzefpokzef
+う|u|The letter u :D
 -</ANSWER>-
 -<CONFIG>-
 simultaneously_object=11

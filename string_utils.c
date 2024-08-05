@@ -18,10 +18,14 @@ char* copy(const char* string) {
     }
 
     int string_length = strlength(string);
-    char* copy = calloc(string_length, sizeof(char));
+    char* copy = malloc((string_length + 1) * sizeof(char));
+    if (!copy) {
+        return NULL;
+    }
     for (int index = 0 ; index < string_length ; index++) {
         copy[index] = string[index];
     }
+    copy[string_length] = '\0';
     return copy;
 }
 
@@ -36,7 +40,7 @@ char* substring(const char* string, int start, int end) {
     end = min(max(end, 0), string_length);
 
     if (start == end) {
-        return "";
+        return copy("");
     }
 
     if (start >= end) {
@@ -44,6 +48,9 @@ char* substring(const char* string, int start, int end) {
     }
 
     char* result = calloc(end - start + 1, sizeof(char));
+    if (!result) {
+        return NULL; // Handle calloc failure
+    }
 
     for (int index = start ; index < end ; index++) {
         if (string[index]) {
@@ -101,6 +108,9 @@ int* find_index(const char* string, const char* model, int* amount_of_index) {
     int model_length = strlength(model);
     (*amount_of_index) = count(string, model);
     int* buffer = calloc(*amount_of_index, sizeof(int));
+    if (!buffer) {
+        return NULL;
+    }
     int buffer_index = 0;
 
     for (int index = 0 ; index < strlength(string) ; index++) {
@@ -153,39 +163,56 @@ int count(const char* string, const char* model) {
 
     return found;
 }
-
+#include <stdio.h>
 char* replace(const char* string, const char* to_replace, const char* replacement, int limit) {
+    printf("1a\n");
     int string_length = strlength(string);
+    printf("2a\n");
     int to_replace_length = strlength(to_replace);
+    printf("3a\n");
     int replacement_length = strlength(replacement);
+    printf("4a\n");
 
     int max_length = max(to_replace_length, replacement_length) * string_length;
-    char* buffer = calloc(max_length, sizeof(char));
+    printf("5a %i\n", max_length);
+    char* buffer = calloc((max_length * 10), sizeof(char));
+    printf("6a\n");
     int active_buffer_size = 0;
+    printf("7a\n");
 
     int amount_of_replace = 0;
+    printf("8a\n");
 
     for (int i = 0 ; i < string_length ; i++) {
         char* sub = substring(string, i, to_replace_length + i);
+        printf("b\n");
         if (count_matching_row_char(sub, to_replace) == to_replace_length && amount_of_replace != limit) {
+            printf("c\n");
             for (int replacement_index = 0 ; replacement_index < replacement_length ; replacement_index++) {
+                printf("d\n");
                 buffer[active_buffer_size] = replacement[replacement_index];
                 active_buffer_size++;
             }
+            printf("e\n");
             amount_of_replace++;
             i += to_replace_length - 1;
         } else {
+            printf("f\n");
             buffer[active_buffer_size] = string[i];
             active_buffer_size++;
         }
+        printf("g\n");
         free(sub);
+        printf("h\n");
     }
     active_buffer_size++;
-    buffer[active_buffer_size] = '\0';
-    char* replaced_string = realloc(buffer, active_buffer_size * sizeof(char));
+    char* replaced_string = realloc(buffer, (active_buffer_size + 1) * sizeof(char));
     if(!replaced_string) {
+        printf("x\n");
         return buffer;
     } else {
+        printf("y\n");
+        buffer[active_buffer_size] = '\0';
         return replaced_string;
     }
 }
@@ -244,51 +271,38 @@ char* replace_last(const char* string, const char* to_replace, const char* repla
 }
 
 char** split(char* string, const char* splitter, int limit, int* string_amount) {
-    int split_counter = 0;
-    int max_split = count(string, splitter);
-    int required_split_amount = (limit <= 0 ? max_split : limit - 1) + 1;
+    int max_split = count(string, splitter) + 1;
+    int required_split_amount = (limit <= 0 ? max_split : limit);
 
-    char** buffer = calloc(required_split_amount + 1, sizeof(char*));
-    buffer[required_split_amount] = "\0";
+    char** buffer = malloc(required_split_amount * sizeof(char*));
     int buffer_index = 0;
 
     if (required_split_amount == 1) {
-        (*string_amount) = 1;
         buffer[0] = string;
-        return buffer;
-    }
-
-    int* index_list = find_index(string, splitter, NULL);
-
-    if (max_split >= 1) {
-        buffer[0] = substring(string, 0, index_list[0]);
         buffer_index++;
-    }
+    } else {
+        int last_index = 0, index_amount = 0, splitter_length = strlength(splitter);
+        int* split_index_list = find_index(string, splitter, &index_amount);
 
-    while (split_counter < required_split_amount - 1) {
-        int substring_start = index_list[split_counter] + strlength(splitter);
-        int substring_end = index_list[split_counter + 1];
-
-        if(split_counter == required_split_amount) {
-            substring_end = strlength(string);
+        if (split_index_list == NULL) {
+            return NULL;
         }
 
-        buffer[buffer_index] = substring(string, substring_start, substring_end);
+        for (int i = 0 ; i < index_amount ; i++) {
+            int current_index = split_index_list[i];
+            buffer[buffer_index] = substring(string, last_index, current_index);
+            last_index = current_index + splitter_length;
+            buffer_index++;
+        }
+        buffer[buffer_index] = substring(string, last_index, strlength(string));
         buffer_index++;
-        split_counter++;
-    }
-
-    if (split_counter < max_split) {
-        int substring_start = index_list[split_counter] + strlength(splitter);
-        int substring_end = strlength(string);
-        buffer[buffer_index] = substring(string, substring_start, substring_end);
+        free(split_index_list);
     }
 
     if (string_amount != NULL) {
         (*string_amount) = buffer_index;
     }
 
-    free(index_list);
     return buffer;
 }
 
